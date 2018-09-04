@@ -1,3 +1,0 @@
-file2.txt modify pc user
-modify pc user 2
-modify pc user 3
