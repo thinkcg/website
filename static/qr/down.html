@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="edge">
+    <meta name="baidu-site-verification" content="aELaZsYlbX" />
+
+    <title>【扫扫乐】</title>
+    <div id='wx_pic' style='margin:0 auto;display:none;'>
+        <img src='./images/64.png' />
+    </div>
+</head>
+<body style="background-color: #ff9e9f">
+    <style type="text/css">
+        /**{margin:0; padding:0;}*/
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        .test {
+            max-height: 600px;
+            max-width: 600px;
+            font-size: 40px;
+        }
+    </style>
+    <div class="test" id="imgdiv" style="text-align:center; margin-top: 100px;  margin-bottom: 0px;  margin: auto;">
+        <img id="img" src="./images/logo.png" />
+    </div>
+    <div id="text" style="text-align: center;"></div>
+    <script type="text/javascript">
+    window.onload = function () {
+        function is_weixin() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/MicroMessenger/i) == "micromessenger") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function is_qq() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/QQ/i) == "qq") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        function is_weibo() {
+            var ua = navigator.userAgent.toLowerCase();
+            if (ua.match(/Weibo/i) == "weibo") {
+                return true;
+            } else {
+                return false;
+            }
+        }
+        var isWeixin = is_weixin();
+        var isQQ = is_qq();
+        var isWeibo = is_weibo();
+        var winHeight = typeof window.innerHeight != 'undefined' ? window.innerHeight : document.documentElement.clientHeight;
+        function weixinloadHtml(){
+            var div = document.createElement('div');
+            div.id = 'weixin-tip';
+
+            var p = String(navigator.platform);
+            if(p == 'iPhone')
+                //console.log("iphone");
+                div.innerHTML = '<p><img src="./images/tishi_iphone.png" alt="微信打开"/></p>';
+            else if(p.indexOf("armv") >= 0)
+                div.innerHTML = '<p><img src="./images/tishi.png" alt="微信打开"/></p>';
+            else if(p.indexOf("aarch") >= 0)
+                div.innerHTML = '<p><img src="./images/tishi.png" alt="微信打开"/></p>';
+            document.body.appendChild(div);
+        }
+        function qqloadHtml() {
+            var div = document.createElement('div');
+            div.id = 'weixin-tip';
+
+            var p = String(navigator.platform);
+            if (p == 'iPhone')
+                div.innerHTML = '<p><img src="./images/tishi_iphone_qq.jpg" alt="微信打开"/></p>';
+            else if (p.indexOf("armv") >= 0)
+                div.innerHTML = '<p><img src="./images/tishi_qq.jpg" alt="微信打开"/></p>';
+            document.body.appendChild(div);
+        }
+        function weiboloadHtml() {
+            var div = document.createElement('div');
+            div.id = 'weixin-tip';
+
+            var p = String(navigator.platform);
+            if (p == 'iPhone')
+                div.innerHTML = '<p><img src="./images/tishi_iphone_weibo.jpg" alt="微信打开"/></p>';
+            else if (p.indexOf("armv") >= 0)
+                div.innerHTML = '<p><img src="./images/tishi_qq.jpg" alt="微信打开"/></p>';
+            document.body.appendChild(div);
+        }
+        function loadStyleText(cssText) {
+            var style = document.createElement('style');
+            style.rel = 'stylesheet';
+            style.type = 'text/css';
+            try {
+                style.appendChild(document.createTextNode(cssText));
+            } catch (e) {
+                style.styleSheet.cssText = cssText; //ie9以下
+            }
+            var head=document.getElementsByTagName("head")[0]; //head标签之间加上style样式
+            head.appendChild(style);
+        }
+        var cssText = "#weixin-tip{position: fixed; left:0; top:0; background: rgba(0,0,0,0.8); filter:alpha(opacity=40); width: 100%; height:100%; z-index: 100;} #weixin-tip p{text-align: center; margin-top: 10%; padding:0 5%;}";
+        if(isWeixin){
+            weixinloadHtml();
+            loadStyleText(cssText);
+        }
+        //如果不是微信
+        //企业版需要判断QQ
+        else
+        {
+            var p = String(navigator.platform);
+//			console.log(p);
+            if(p == 'Win32')
+            {
+                self.location = "win.html";
+            }
+            else if(p == 'MacIntel')
+            {
+                self.location = "win.html";
+            }
+            else if(p == 'iPhone')
+            {
+                //如果在qq内
+                if(isQQ)
+                {
+                    qqloadHtml();
+                    loadStyleText(cssText);
+                }
+                //如果不在weibo内
+                else if(isWeibo){
+                    //txt = "这是【试镜】1.0企业版，请勿外部传播！";
+                    txt = "";//这是【试镜】1.5！
+                    document.getElementById("text").innerHTML = txt;
+                    //self.location = "itms-services://?action=download-manifest&url=https://dn-think.qbox.me/sj1.0.plist";
+                    ////self.location = "https://itunes.apple.com/us/app/shi-jing/id1053373481?l=zh&ls=1&mt=8";
+                    weiboloadHtml();
+                    loadStyleText(cssText);
+                }
+                else
+                {
+                    txt = "";//这是【试镜】1.5！
+                    document.getElementById("text").innerHTML = txt;
+                    window.location.href = "https://itunes.apple.com/cn/app/%E6%89%AB%E6%89%AB%E4%B9%90/id1425484248?mt=8";
+                    //window.location.href = "https://itunes.apple.com/cn/app/xiao-ka-xiu/id993071546?l=zh&ls=1&mt=8";
+                }
+            }
+            //安卓上
+            else if(p.indexOf("armv") >= 0)
+            {
+                txt = "官方下载，安全无毒，请放心下载安装！";
+                document.getElementById("text").innerHTML=txt;
+                window.setTimeout(function () {
+                    self.location = "http://www.limit-animation.com/cgh/qr/android.apk";
+                }, 500);
+            }
+            //安卓上
+            else if(p.indexOf("aarch") >= 0)
+            {
+                txt = "官方下载，安全无毒，请放心下载安装！";
+                document.getElementById("text").innerHTML=txt;
+                window.setTimeout(function () {
+                    console.log("到位了");
+                    self.location = "http://www.limit-animation.com/cgh/qr/android.apk";
+                }, 500);
+            }
+        }
+    }
+    </script>
+</body>
+</html>
